@@ -5,21 +5,130 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Meme Generator</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body onload="init()">
 
-    <div class="mem-container">
-        <h3></h3>
-    </div>
+    <header class="main-header main-layout ">
+        <div class="header-container main-layout flex align-center space-between">
+            <h3 class="logo">Mem</h3>
+            <nav class="nav-ber">
+                <a href="#" class="btn-gallery">Gallery</a>
+                <a href="#" class="btn-about">About</a>
+            </nav>
+        </div>
+
+    </header>
 
 
 
-    <script src="js/controller.js "></script>
-    <script src="js/service.js "></script>
-    <script src="js/upload-service.js "></script>
+
+    <!-- CHANGE INPUT SEARCH TO:!! -->
+    <!-- <input list="browsers"> -->
+    <!-- <datalist id="browsers">
+      <option value="Internet Explorer">
+      <option value="Firefox">
+      <option value="Google Chrome">
+      <option value="Opera">
+      <option value="Safari">
+    </datalist> -->
+
+    <main class="main-content">
+        <div class="header-gallery flex align-center space-between">
+            <form class="box-search">
+                <input class="input-search" type="text" placeholder="Search">
+                <button class="btn-search" type="submit"> </button>
+            </form>
+
+            <div class="category">
+                <p>Funny Smile a b c d e g</p>
+
+            </div>
+            <button class="more">More</button>
+        </div>
+        <div class="images-container ">
+            <!-- <img src="/img/1.jpg" alt="">
+            <img src="/img\2.jpg" alt="">
+            <img src="/img\3.jpg" alt="">
+            <img src="/img\4.jpg" alt="">
+            <img src="/img\5.jpg" alt="">
+            <img src="/img\6.jpg" alt="">
+            <img src="/img\7.jpg" alt="">
+            <img src="/img\8.jpg" alt="">
+            <img src="/img\9.jpg" alt="">
+            <img src="/img\10.jpg" alt="">
+            <img src="/img\12.jpg" alt="">
+            <img src="/img\13.jpg" alt="">
+            <img src="/img\14.jpg" alt="">
+            <img src="/img\15.jpg" alt="">
+            <img src="/img\16.jpg" alt="">
+            <img src="/img\17.jpg" alt="">
+            <img src="/img\18.jpg" alt=""> -->
+
+        </div>
+
+    </main>
+
+
+    <section>
+
+        <div class="editor-container hidden">
+            <div class="canvas-container">
+                <canvas id="my-canvas" height="450" width="450"></canvas>
+            </div>
+
+            <div class="control-boxes ">
+                <input type="text " class="add-text ">
+                <button class="arrow-btn "></button>
+                <button class="plus-btn "></button>
+                <button class="delete-btn "></button>
+
+                <div>
+                    <button class="larg-font "></button>
+                    <button class="small-font "></button>
+                    <button class="left-font "></button>
+                    <button class="center-font "></button>
+                    <button class="right-font "></button>
+                    <select class="impact "></select>
+                    <button class="s-font "></button>
+                    <button class="color-font "></button>
+                </div>
+
+                <div class="emoji "> 😋😎😍🤣</div>
+
+                <form action=" " method="POST " enctype="multipart/form-data " onsubmit="uploadImg(this, event) ">
+                    <input name="img " id="imgData " type="hidden " />
+                    <button class="btn " type="submit ">Share</button>
+                    <a href="# " class="btn " onclick="downloadImg(this) " download="my-img.jpg ">Download</a>
+                    <div class="share-container "></div>
+                </form>
+
+
+
+            </div>
+
+
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        <small> </small>
+
+
+
+    </footer>
+
+
+    <script src="js/mem-service.js"></script>
+    <script src="js/canvas-service.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/upload-service.js"></script>
+    <script src="js/storage-service.js"></script>
 </body>
 
 </html>
