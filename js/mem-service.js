@@ -34,19 +34,38 @@ function getImageUrl() {
 }
 
 function resetMeme() {
-    console.log('gmeme');
     gMeme = {
-        selectedImgId: 1,
+        selectedImgId: null,
         selectedLineIdx: 0,
         lines: [{
-            txt: 'Enter your text here',
-            size: 35,
-            align: 'left',
-            color: 'white'
+            txt: 'Enter your txt',
+            x: 275,
+            y: 275,
+            fontSize: 20,
+            lineWidth: 2,
+            fontFamily: 'Impact',
+            textAlign: 'center',
+            fillStyle: 'white',
+            strokeStyle: 'black'
         }]
     }
 }
 
+
 function setImage(imgId) {
     gMeme.selectedImgId = imgId
+}
+
+
+function setMemeLine(txt) {
+    gMeme.lines[gMeme.selectedLineIdx].txt = txt
+}
+
+function alignText(direction) {
+    gMeme.lines[gMeme.selectedLineIdx].textAlign = direction
+}
+
+function updateSize(addition) {
+    gMeme.lines[gMeme.selectedLineIdx].fontSize += addition
+
 }
