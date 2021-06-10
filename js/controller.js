@@ -1,46 +1,47 @@
 'use strict'
 
-var gSelectImage;
-var gElCanvas;
-var gCtx
+
+
 
 function init() {
-    console.log('hello')
     renderImages();
-    reSetCanvas();
-
 }
 
-function reSetCanvas() {
-    gElCanvas = document.querySelector('.my-canvas')
-    gCtx = gElCanvas.getContext('2d')
-}
 
 
 function renderImages() {
-    var images = getImages();
-    console.log(images)
     var elImagesGallery = document.querySelector('.images-container');
-
-    var strHTMLs = images.map((img) => {
+    var strHTML = gImgs.map((img) => {
         return `
-        <div class="gallery-img">
-        <img data-id="${img.id}" onclick="onselectionImage(this)" src="${img.url}" alt="">
-        </div>
+        <img src="${img.url}" alt "" onclick="onselectImage(${img.id})">
         `;
     });
+    elImagesGallery.innerHTML = strHTML.join('')
 
-    elImagesGallery.innerHTML = strHTMLs.join('');
 }
 
-function onselectionImage(el) {
-    gSelectImage = el;
-    drawImg2(el.src)
+
+
+
+function onselectImage(imgId) {
+    resetMeme()
+    setImage(imgId) // in service mem
+        // drawImg2(el.src)
     moveToEditor()
-
-
+    reSetCanvas()
+    renderCanvas()
+    drawText()
 }
 
+function reSetCanvas() {
+    gElCanvas = document.querySelector('#my-canvas')
+    gCtx = gElCanvas.getContext('2d')
+}
+
+function renderCanvas() {
+    drawImage()
+
+}
 
 
 function moveToEditor() {
@@ -54,16 +55,29 @@ function moveToGallery() {
 }
 
 
+// function drawImg() {
+//     var elImg = document.querySelector('img')
+//     gCtx.drawImage(elImg, 0, 0, gCanvas.width, gCanvas.height)
+//         // console.log(gCanvas.width);
+// }
 
 
 
-function drawImg2() {
+function drawImage() {
     var img = new Image()
-    img.src = 'img/1.jpg';
+    img.src = getImageUrl();
     img.onload = () => {
-        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
     }
 }
+
+// function drawImg3() {
+//     var img = new Image()
+//     img.src = 'https://steamuserimages-a.akamaihd.net/ugc/940586530515504757/CDDE77CB810474E1C07B945E40AE4713141AFD76/';
+//     img.onload = () => {
+//         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height) //img,x,y,xend,yend
+//     }
+// }
 
 
 

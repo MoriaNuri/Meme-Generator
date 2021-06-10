@@ -18,9 +18,6 @@
             max-width: 1260px;
             margin: 0 auto;
         }
-        /* padding-right: 1.4rem;
-    padding-left: 1.4rem;
-} */
         /* Helpers */
         /* flex helpers */
         
@@ -45,15 +42,14 @@
         /* BASE */
         
         html {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            color: #22252C;
+            font-size: 1rem;
+            font-family: MyriadPro-Regular, sans-serif
             /* line-height: 1.5; */
         }
         
         body {
             margin: 0;
             background-color: #22252C;
-            font-size: 1rem;
             overflow: hidden;
         }
         
@@ -68,6 +64,10 @@
         
         img {
             width: 100%;
+        }
+        
+        button {
+            cursor: pointer;
         }
         /* Components */
         /* main-header  */
@@ -113,33 +113,24 @@
             padding-left: 2.625rem;
         }
         
-        .box-search {
+        .search {
             background-color: #22252C;
             border-radius: 10px;
             margin-left: 2rem;
         }
         
-        .input-search {
+        .search input {
             background-color: unset;
             border: unset
         }
         
-        .btn-search {
+        .search img {
             background-color: unset;
             border: unset;
             cursor: pointer;
             font-family: brands;
             color: aqua;
             /* color: linear-gradient(to right, #0F9BB2, #2CB77B); */
-        }
-        
-        .btn-search::before {
-            content: "\f002";
-        }
-        
-        .box-search {
-            background-color: #22252C;
-            /* background-image: linear-gradient(to right, #0F9BB2, #2CB77B) */
         }
         
         .category {
@@ -179,4 +170,70 @@
         
         .hidden {
             display: none;
+        }
+        
+        canvas {
+            background-color: antiquewhite;
+            border-radius: 2em;
+            border: rgba(81, 78, 72, 0.075) 4px solid;
+        }
+        
+        .control-boxes {
+            background-color: #383B42;
+            border-radius: 1em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 4rem;
+        }
+        
+        .add-text {
+            border-radius: 3em;
+        }
+        
+        .arrow-btn {
+            background-color: #4CB7D3;
+            border-radius: 1rem;
+            width: 3.5rem;
+        }
+        
+        .delete-btn {
+            background-color: red;
+            border-radius: 1rem;
+            width: 3.5rem;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .delete-btn img {
+            height: 3.;
+            width: 3.5rem;
+        }
+        
+        .plus-btn {
+            background-color: greenyellow;
+            font-size: 3.625rem;
+            color: #EBEEF3;
+            border-radius: 1rem;
+            width: 3.5rem;
+        }
+        
+        .buttons-font {
+            background-color: #19A59F;
+            border-radius: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-share {
+            background-color: #1E7CD3;
+            border-radius: 3rem;
+        }
+        
+        .btn-download {
+            background-color: #8F44BB;
+        }
+        
+        footer {
+            background-color: #FEFEFE;
+            text-align: center;
         }
