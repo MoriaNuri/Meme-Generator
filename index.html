@@ -11,71 +11,98 @@
 
 <body onload="init()">
 
-    <header class="main-header main-layout ">
-        <div class="header-container main-layout flex align-center space-between">
-            <h3 class="logo">Mem</h3>
-            <nav class="nav-ber">
-                <a href="#" class="btn-gallery" onclick=" moveToGallery()">Gallery</a>
-                <a href="#" class="btn-about">About</a>
-            </nav>
-        </div>
-
+    <header class="main-header flex space-between align-center">
+        <!-- <div class="header-container main-layout flex  space-between "> -->
+        <h3 class="logo">Meme Generator</h3>
+        <nav class="nav-ber">
+            <ul class="nav-ber clean-list flex">
+                <li class="gallery active" onclick=" moveToGallery()">Gallery</li>
+                <li class="about">About</li>
+            </ul>
+        </nav>
     </header>
 
-    <main class="main-content main-layout">
-        <div class="header-gallery flex align-center space-between">
+    <main class="main-content">
+        <div class="header-gallery flex align-center space-between ">
             <form class="box-search">
                 <input class="input-search" type="text" placeholder="Search">
-                <button class="btn-search" type="submit"><img src="img/search.png"></button>
+                <button class="btn-search" type="submit"><img src="img/search2.png"></button>
             </form>
 
-            <div class="category">
-                <p>Funny Smile a b c d e g</p>
-
+            <div class="category flex">
+                <p>Funny</p>
+                <p>Smile</p>
+                <p>Learn</p>
+                <p>Football</p>
             </div>
             <button class="more">More</button>
         </div>
+
         <div class="images-container">
         </div>
     </main>
-
     <section>
         <div class="editor hidden ">
             <div class="editor-container flex justify-center">
 
                 <div class="canvas-container">
-                    <canvas id="my-canvas" height="500" width="500"></canvas>
+                    <canvas id="my-canvas" height="550" width="480"></canvas>
                 </div>
                 <div class="control-boxes flex column align-center">
                     <div class="text-line">
-                        <input type="text " name="meme-text" placeholder="Enter your text" oninput="onInputText(this.value)">
+                        <input type="text " name="meme-text" class="meme-text" placeholder="Enter your text" oninput="onInputText(this.value)" autocomplete="off">
                     </div>
                     <div class="basic-btns flex">
-                        <button onclick="onMove(-8)" class="up-btn">↑</button>
-                        <button onclick="onMove(8)" class="down-btn">↓</button>
-                        <button onclick="onChangeLine()" class="arrow-btn flex align-center">⬆⬇</button>
-                        <button onclick="onAddText()" class="plus-btn">+</button>
+                        <button onclick="onMove(-5)" class="up-btn"><img src="img/up.png"></button>
+                        <button onclick="onMove(5)" class="down-btn"><img src="img/down.png"></button>
+                        <button onclick="onChangeLine()" class="arrow-btn flex align-center"><img src="img/up.png"><img src="img/down.png"></button>
+                        <button onclick="onAddLine()" class="plus-btn"><img src="img/+@1X.png"></button>
                         <button onclick="onDelete()" class="delete-btn "><img src="img/delete.png"> </button>
                     </div>
                     <div class="btns-style grid">
-                        <button onclick="onUpdateSize(2)">A+</button>
-                        <button onclick="onUpdateSize(-2)">A-</button>
-                        <button onclick="onAlign('right')"><img src="img/textright.png"></button>
+                        <button onclick="onUpdateSize(2)"><img src="img/A+@1X.png"></button>
+                        <button onclick="onUpdateSize(-2)"><img src="img/A-@1X.png"></button>
+                        <button onclick="onAlign('right')"><img src="img/righttxt.png"></button>
                         <button onclick="onAlign('center')"><img src="img/txtcenter.png"></button>
-                        <button onclick="onAlign('left')"><img src="img/txtleft.png"></button>
+                        <button onclick="onAlign('left')"><img src="img/lefttxt.png"></button>
                         <select id="font-family" oninput="onUpdatFont(this.value)">
+                            <option value="Impact">Impact</option>
                             <option value="Arial">Arial</option>
+                            <option value="cursive">cursive</option>
+                            <option value="serif">serif</option>
+                            <option value="fantasy">fantasy</option>
                         </select>
-                        <button><input type="color" name="stroke" oninput="onSetStrokeColor(this.value)" value="#000000"></button>
-                        <input type="color" name="color" oninput="onSetFillColor(this.value)" value="#ffffff">
+                        <button class="btn-stroke"><input type="color" name="stroke" oninput="onSetStrokeColor(this.value)" value="#000000"></button>
+
+                        <button class="btn-fill"> <input type="color" name="color" oninput="onSetFillColor(this.value)" value="#ffffff"></button>
                     </div>
-                    <div class="stickers"></div>
-                    <form action=" " method="POST " enctype="multipart/form-data " onsubmit="uploadImg(this, event) ">
+
+                    <div class="stickers space-between ">
+                        <button class=left-btn onclick="onScrollStickersLeft()"><img src="img/left.png"></button>
+                        <div class="stikers-gallery ">
+                            <!-- <img src="img/stiker1.png">
+                            <img src="img/stiker2.png">
+                            <img src="img/stiker3.png">
+                            <img src="img/stiker4.png"> -->
+                        </div>
+                        <button class=right-btn onclick="onScrollStickersRight()"><img src="img/right.png"></button>
+                    </div>
+
+                    <div class="bottom-controller flex">
+                        <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                            <input name="img" id="imgData" type="hidden" />
+                            <button class="btn-share " type="submit"><img src="img/share.png">  Share</button>
+                            <div class="share-container"></div>
+                        </form>
+                        <a href="# " class="btn-download " onclick="onDownloadImg(this)" download="my-img.jpg">Download <img src="img/download (3).png"></a>
+                    </div>
+                    <!-- <form class="bottom-controller flex " action=" " method="POST " enctype="multipart/form-data " onsubmit="uploadImg(this, event) ">
                         <input name="img " id="imgData " type="hidden " />
-                        <button class="btn-share " type="submit ">Share</button>
-                        <a href="# " class="btn-download " onclick="downloadImg(this) " download="my-img.jpg ">Download</a>
-                        <div class="share-container "></div>
-                    </form>
+                        <button class="btn-share " type="submit "><img src="img/share.png">  Share</button>
+                        <div class="share-container"></div>
+                    </form> -->
+                    <!-- <a href="#" class="btn" onclick="onDownloadImg(this)" download="my-img.jpg">Download</a> -->
+
                 </div>
             </div>
         </div>

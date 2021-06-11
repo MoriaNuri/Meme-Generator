@@ -2,6 +2,7 @@
 
 function init() {
     renderImages();
+    // renderStickers();
 }
 
 function renderImages() {
@@ -13,6 +14,16 @@ function renderImages() {
         `;
     });
     elImagesGallery.innerHTML = strHTML.join('')
+}
+
+function renderStickers() {
+    var elStickersGsllery = document.querySelector('.stikers-gallery');
+    var strHtml = gStickers.map((sticker) => {
+        return `
+        <img src="${sticker.url}" alt "" onSelectSticker(${sticker.id})">
+        `;
+    });
+    elStickersGsllery.innerHTML = strHtml.join('')
 
 }
 
@@ -24,6 +35,7 @@ function onSelectImage(imgId) {
     reSetCanvas()
     renderCanvas()
     renderLines()
+    renderStickers()
 
 }
 
@@ -40,11 +52,23 @@ function renderCanvas() {
 function moveToEditor() {
     document.querySelector('main').classList.add('hidden');
     document.querySelector('.editor').classList.remove('hidden');
+    cleanActive()
 }
 
 function moveToGallery() {
     document.querySelector('.main-content').classList.remove('hidden');
     document.querySelector('.editor').classList.add('hidden');
+    addActive()
+}
+
+function cleanActive() {
+    var el = document.querySelector('.gallery')
+    el.classList.remove('active')
+}
+
+function addActive() {
+    var el = document.querySelector('.gallery')
+    el.classList.add('active')
 }
 
 
@@ -54,7 +78,7 @@ function drawImage() {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         renderLines()
-            // drawText()
+
     }
 }
 
@@ -73,7 +97,6 @@ function renderLine(line) {
     gCtx.fillStyle = line.fillStyle
     gCtx.font = `${line.fontSize}px ${line.fontFamily}`
     gCtx.textAlign = line.textAlign
-    console.log(line)
     gCtx.fillText(line.txt, line.x, line.y)
     gCtx.strokeText(line.txt, line.x, line.y)
 }
@@ -85,6 +108,8 @@ function renderLines() {
         });
     }
 }
+
+
 
 // gMeme.lines[gMeme.selectedLineIdx]
 
@@ -111,45 +136,89 @@ function resizeCanvas() {
     gCanvas.height = elContainer.offsetHeight
 }
 
-
-
-// function onMove() {
-//     moveLine()
-// }
-
-// function onChangeLine() {
-//     changeLine()
-// }
-
-// function onAddText() {
-//     addTxt()
-// }
-
-// function onDelete() {
-//     deleteLine()
-// }
-
-function onUpdateSize(addition) {
-    UpdateSize(addition)
+function onMove(number) {
+    moveLine(number)
+    drawImage()
+    renderLine(gMeme.lines[gMeme.selectedLineIdx])
 }
 
+function onChangeLine() {
+    var text = changeLine() || '';
+    document.querySelector('[name="meme-text"]').value = text;
+    // changeLine()
+    // updateCurrLine()
+    // renderLine()
+}
 
+function onAddLine() {
+    addLine()
+    drawImage()
+    updateCurrLine()
+    renderLine(gCurrLine)
+    setPrevLineIdx()
+    clearInput()
+}
 
+function onDelete() {
+    deleteLine()
+    drawImage()
+    renderLine()
+}
+
+function onUpdateSize(addition) {
+    updateSize(addition)
+    drawImage()
+    renderLine(gMeme.lines[gMeme.selectedLineIdx])
+
+}
 
 function onAlign(direction) {
     alignText(direction)
-    renderLine()
     drawImage()
+    renderLine(gMeme.lines[gMeme.selectedLineIdx])
 }
 
-// function onUpdatFont() {
-//     updatFont()
-// }
+function onUpdatFont(newFont) {
+    updatFont(newFont)
+    drawImage()
+    renderLine(gMeme.lines[gMeme.selectedLineIdx])
+}
 
-// function onSetStrokeColor() {
-//     SetStrokeColor()
-// }
+function onSetStrokeColor(newStrokeColor) {
+    setStrokeColor(newStrokeColor)
+    drawImage()
+    renderLine(gMeme.lines[gMeme.selectedLineIdx])
 
-// function onSetFillColor() {
-//     SetFillColor()
-// }
+}
+
+function onSetFillColor(newFillColor) {
+    SetFillColor(newFillColor)
+    drawImage()
+    renderLine(gMeme.lines[gMeme.selectedLineIdx])
+}
+
+
+function onDownloadImg(elLink) {
+    downloadImg(elLink)
+
+}
+
+
+
+function drawTriangle(x, y) {
+    gCtx.beginPath()
+    gCtx.lineWidth = 2
+    gCtx.moveTo(x, y)
+    gCtx.lineTo(20, 100)
+    gCtx.lineTo(50, 220)
+    gCtx.closePath()
+        // gCtx.lineTo(x, y)
+    gCtx.fillStyle = gCurrColor
+    gCtx.fill()
+    gCtx.strokeStyle = gCurrColor
+    gCtx.stroke()
+}
+
+function clearInput() {
+    document.querySelector('input[name="meme-text"]').value = ''
+}
