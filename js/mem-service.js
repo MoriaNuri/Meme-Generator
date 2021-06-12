@@ -156,13 +156,6 @@ function SetFillColor(newFillColor) {
 }
 
 
-
-// function downloadImg(elLink) {
-
-//     const data = gElCanvas.toDataURL('image/png')
-//     elLink.href = data
-//     elLink.download = 'my-meme.png'
-// }
 function downloadImg(elLink) {
 
     var imgContent = gElCanvas.toDataURL('')

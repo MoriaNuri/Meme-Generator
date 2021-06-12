@@ -109,25 +109,10 @@ function renderLines() {
     }
 }
 
-
-
-// gMeme.lines[gMeme.selectedLineIdx]
-
 function clearCanvas() {
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
-        // You may clear part of the canvas
-        // gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height/4)
+
 }
-
-
-
-function downloadCanvas(elLink) {
-    const data = gCanvas.toDataURL()
-    console.log('DATA', data);
-    elLink.href = data
-    elLink.download = 'puki'
-}
-
 
 
 function resizeCanvas() {
@@ -188,7 +173,6 @@ function onSetStrokeColor(newStrokeColor) {
     setStrokeColor(newStrokeColor)
     drawImage()
     renderLine(gMeme.lines[gMeme.selectedLineIdx])
-
 }
 
 function onSetFillColor(newFillColor) {
@@ -197,13 +181,9 @@ function onSetFillColor(newFillColor) {
     renderLine(gMeme.lines[gMeme.selectedLineIdx])
 }
 
-
 function onDownloadImg(elLink) {
     downloadImg(elLink)
-
 }
-
-
 
 function drawTriangle(x, y) {
     gCtx.beginPath()
