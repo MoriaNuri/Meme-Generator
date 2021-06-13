@@ -185,6 +185,11 @@
             font-family: poppins-Medium;
             margin-right: 1em;
         }
+        
+        .translet {
+            background-image: linear-gradient(to right, #0F9BB2, #2CB77B);
+            margin-left: 150px;
+        }
         /* images-container */
         
         .images-container {
