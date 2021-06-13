@@ -1,8 +1,9 @@
 'use strict'
 
+var gImg
+
 function init() {
     renderImages();
-    // renderStickers();
 }
 
 function renderImages() {
@@ -17,16 +18,21 @@ function renderImages() {
 }
 
 function renderStickers() {
-    var elStickersGsllery = document.querySelector('.stikers-gallery');
+    var elStickersGallery = document.querySelector('.stickers .s');
     var strHtml = gStickers.map((sticker) => {
         return `
         <img src="${sticker.url}" alt "" onSelectSticker(${sticker.id})">
         `;
     });
-    elStickersGsllery.innerHTML = strHtml.join('')
-
+    elStickersGallery.innerHTML = strHtml.join('')
 }
 
+function onSelectSticker(stickerId) {
+    var url = getStickerUrl(stickerId)
+    var newSticker = { id: stickerId, url: url, x: 100, y: 100 }
+    gMeme.sticker.push(newSticker)
+
+}
 
 function onSelectImage(imgId) {
     resetMeme()
@@ -46,7 +52,6 @@ function reSetCanvas() {
 
 function renderCanvas() {
     drawImage()
-
 }
 
 function moveToEditor() {
@@ -59,6 +64,7 @@ function moveToGallery() {
     document.querySelector('.main-content').classList.remove('hidden');
     document.querySelector('.editor').classList.add('hidden');
     addActive()
+    clearInput()
 }
 
 function cleanActive() {
@@ -87,8 +93,6 @@ function onInputText(txt) {
     setMemeLine(txt)
     renderLine(gMeme.lines[gMeme.selectedLineIdx])
     drawImage()
-
-
 }
 
 function renderLine(line) {
@@ -146,8 +150,12 @@ function onAddLine() {
 
 function onDelete() {
     deleteLine()
+    renderLines()
+    setPrevLineIdx()
+    updateCurrLine()
     drawImage()
-    renderLine()
+    clearInput()
+
 }
 
 function onUpdateSize(addition) {
@@ -201,4 +209,60 @@ function drawTriangle(x, y) {
 
 function clearInput() {
     document.querySelector('input[name="meme-text"]').value = ''
+}
+
+function onImgInput(ev) {
+    loadImageFromInput(ev, renderImg)
+}
+
+// function loadImageFromInput(ev, onImageReady) {
+//     // document.querySelector('.share-container').innerHTML = ''
+//     var reader = new FileReader()
+
+//     reader.onload = function(event) {
+//         // console.log('event:', event)
+//         var img = new Image()
+//         img.onload = function() {
+//             let currentId = makeId();
+//             gImgs.unshift({
+//                 id: currentId,
+//                 src: img.src,
+//                 keywords: ['my imgs'],
+
+//                 onAddLine()
+//             });
+//         }
+
+//     }
+//     reader.readAsDataURL(ev.target.files[0])
+//     renderLines()
+
+// }
+
+
+
+function renderImg(img) {
+    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
+}
+
+
+function onSaveMeme() {
+    var currentSave = loadFormStorage();
+    if (!currentSave) currentSave = [];
+
+    currentSave.push(gMeme);
+
+    saveToLocal(currentSave);
+
+    setInputTxt('');
+    renderSavedProj();
+    gotoMainPage();
+}
+
+function onSetLang(lang) {
+    setLang(lang);
+    if (lang === 'he') document.body.classList.add('rtl')
+    else document.body.classList.remove('rtl')
+        // renderBooks();
+    doTrans();
 }

@@ -30,4 +30,7 @@ function doUploadImg(elForm, onSuccess) {
         .catch(function(err) {
             console.error(err)
         })
+
+
+
 }

@@ -8,34 +8,40 @@ var gCurrLine
 
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 var gImgs = [
-    { id: 1, url: 'img/1.jpg', keywords: ['happy'] },
-    { id: 2, url: 'img/2.jpg', keywords: ['happy'] },
-    { id: 3, url: 'img/3.jpg', keywords: ['happy'] },
-    { id: 4, url: 'img/4.jpg', keywords: ['happy'] },
-    { id: 5, url: 'img/5.jpg', keywords: ['happy'] },
+    { id: 1, url: 'img/1.jpg', keywords: ['pilitic'] },
+    { id: 2, url: 'img/2.jpg', keywords: ['pest'] },
+    { id: 3, url: 'img/3.jpg', keywords: ['pets', 'kids'] },
+    { id: 4, url: 'img/4.jpg', keywords: ['pets'] },
+    { id: 5, url: 'img/5.jpg', keywords: ['kids'] },
     { id: 6, url: 'img/6.jpg', keywords: ['happy'] },
-    { id: 7, url: 'img/7.jpg', keywords: ['happy'] },
+    { id: 7, url: 'img/7.jpg', keywords: ['kids'] },
     { id: 8, url: 'img/8.jpg', keywords: ['happy'] },
-    { id: 9, url: 'img/9.jpg', keywords: ['happy'] },
-    { id: 10, url: 'img/10.jpg', keywords: ['happy'] },
+    { id: 9, url: 'img/9.jpg', keywords: ['kids'] },
+    { id: 10, url: 'img/10.jpg', keywords: ['[olitic]'] },
     { id: 11, url: 'img/11.jpg', keywords: ['happy'] },
     { id: 12, url: 'img/12.jpg', keywords: ['happy'] },
     { id: 13, url: 'img/13.jpg', keywords: ['happy'] },
     { id: 14, url: 'img/14.jpg', keywords: ['happy'] },
     { id: 15, url: 'img/15.jpg', keywords: ['happy'] },
     { id: 16, url: 'img/16.jpg', keywords: ['happy'] },
-    { id: 17, url: 'img/17.jpg', keywords: ['happy'] },
-    { id: 18, url: 'img/18.jpg', keywords: ['happy'] },
+    { id: 17, url: 'img/17.jpg', keywords: ['politic'] },
+    { id: 18, url: 'img/18.jpg', keywords: ['kids'] },
 ];
 
 var gStickers = [
-    { id: 1, url: 'img/stiker1.jpg' },
-    { id: 2, url: 'img/stiker2.jpg' },
-    { id: 3, url: 'img/stiker3.jpg' },
-    { id: 4, url: 'img/stiker4.jpg' },
+    { id: 1, url: 'img/stiker1.png' },
+    { id: 2, url: 'img/stiker2.png' },
+    { id: 3, url: 'img/stiker3.png' },
+    { id: 4, url: 'img/stiker4.png' },
 ];
 
+function getStickerUrl(id) {
+    return gStickers.find(sticker => sticker.id === id).url
+}
 
+function getMmemStickerUrl(id) {
+    return gMeme.stickers.find(sticker => sticker.id === id).url
+}
 
 function getImageUrl() {
     return gImgs.find(img => img.id === gMeme.selectedImgId).url
@@ -55,7 +61,9 @@ function resetMeme() {
             textAlign: 'center',
             fillStyle: 'white',
             strokeStyle: 'black'
-        }]
+        }],
+        selectedStickersIdx: -1,
+        stickers: []
     }
 }
 
@@ -73,6 +81,16 @@ function addLine() {
         strokeStyle: 'black'
     })
 }
+
+// function addSticker(id) {
+//     gMeme.sticker.push({
+//         id:
+
+
+
+
+//     })
+// }
 
 function updateCurrLine() {
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
@@ -127,7 +145,7 @@ function highlightLine() {
 
 
 function deleteLine() {
-    if (gMeme.selectedLineIdx > 0)
+    if (gMeme.selectedLineIdx >= 0)
         gMeme.lines.splice(gMeme.selectedLineIdx, 1)
     gMeme.selectedLineIdx -= 1
 }
@@ -160,4 +178,23 @@ function downloadImg(elLink) {
 
     var imgContent = gElCanvas.toDataURL('')
     elLink.href = imgContent
+}
+
+var gCurrLang = 'en'
+
+function setLang(lang) {
+    gCurrLang = lang;
+}
+
+function generateKeyWords() {
+    let copyOfImgs = JSON.parse(JSON.stringify(gImgs));
+
+    let keysMap = copyOfImgs.reduce((acc, img) => {
+        img.keywords.forEach((keyword) => {
+            acc[keyword] = acc[keyword] ? acc[keyword] + 1 : 1;
+        });
+        return acc;
+    }, {});
+
+    return keysMap;
 }
