@@ -17,6 +17,63 @@ function renderImages() {
     elImagesGallery.innerHTML = strHTML.join('')
 }
 
+
+function onSelectImage(imgId) {
+    resetMeme()
+    setImage(imgId)
+    moveToEditor()
+    reSetCanvas()
+    renderCanvas()
+    renderLines()
+    renderStickers()
+    resizeCanvas()
+}
+
+
+function moveToEditor() {
+    document.querySelector('main').classList.add('hidden');
+    document.querySelector('.editor').classList.remove('hidden');
+    cleanActive()
+}
+
+function reSetCanvas() {
+    gElCanvas = document.querySelector('#my-canvas')
+    gCtx = gElCanvas.getContext('2d')
+}
+
+
+function renderCanvas() {
+    drawImage()
+}
+
+function renderLines() {
+    if (gMeme.lines.length) {
+        gMeme.lines.forEach(line => {
+            renderLine(line)
+        });
+    }
+}
+
+function renderLine(line) {
+    gCtx.lineWidth = line.lineWidth
+    gCtx.strokeStyle = line.strokeStyle
+    gCtx.fillStyle = line.fillStyle
+    gCtx.font = `${line.fontSize}px ${line.fontFamily}`
+    gCtx.textAlign = line.textAlign
+    gCtx.fillText(line.txt, line.x, line.y)
+    gCtx.strokeText(line.txt, line.x, line.y)
+}
+
+function drawImage() {
+    var img = new Image()
+    img.src = getImageUrl();
+    img.onload = () => {
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+        renderLines()
+
+    }
+}
+
 function renderStickers() {
     var elStickersGallery = document.querySelector('.stickers .s');
     var strHtml = gStickers.map((sticker) => {
@@ -27,38 +84,24 @@ function renderStickers() {
     elStickersGallery.innerHTML = strHtml.join('')
 }
 
-function onSelectSticker(stickerId) {
-    var url = getStickerUrl(stickerId)
-    var newSticker = { id: stickerId, url: url, x: 100, y: 100 }
-    gMeme.sticker.push(newSticker)
 
-}
+// function onSelectSticker(id) {
+//     addsticker(id)
+//     drawSticker(gMeme.stickers.length - 1)
+//         // var url = getStickerUrl(stickerId)
+//         // var newSticker = { id: stickerId, url: url, x: 100, y: 100 }
+//         // gMeme.sticker.push(newSticker)
+// }
 
-function onSelectImage(imgId) {
-    resetMeme()
-    setImage(imgId)
-    moveToEditor()
-    reSetCanvas()
-    renderCanvas()
-    renderLines()
-    renderStickers()
+// function drawSticker() {
+//     var sticker = getStickerUrl(id)
+//     var img = new Image()
+//     img.src = sticker.url
+//     img.onload = () => {
+//         gCtx.drawImage(img, sticker.x, sticker.y, gElCanvas.width, gElCanvas.height)
+//     }
+// }
 
-}
-
-function reSetCanvas() {
-    gElCanvas = document.querySelector('#my-canvas')
-    gCtx = gElCanvas.getContext('2d')
-}
-
-function renderCanvas() {
-    drawImage()
-}
-
-function moveToEditor() {
-    document.querySelector('main').classList.add('hidden');
-    document.querySelector('.editor').classList.remove('hidden');
-    cleanActive()
-}
 
 function moveToGallery() {
     document.querySelector('.main-content').classList.remove('hidden');
@@ -78,51 +121,23 @@ function addActive() {
 }
 
 
-function drawImage() {
-    var img = new Image()
-    img.src = getImageUrl();
-    img.onload = () => {
-        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-        renderLines()
-
-    }
-}
-
-
 function onInputText(txt) {
     setMemeLine(txt)
     renderLine(gMeme.lines[gMeme.selectedLineIdx])
     drawImage()
 }
 
-function renderLine(line) {
-    gCtx.lineWidth = line.lineWidth
-    gCtx.strokeStyle = line.strokeStyle
-    gCtx.fillStyle = line.fillStyle
-    gCtx.font = `${line.fontSize}px ${line.fontFamily}`
-    gCtx.textAlign = line.textAlign
-    gCtx.fillText(line.txt, line.x, line.y)
-    gCtx.strokeText(line.txt, line.x, line.y)
-}
 
-function renderLines() {
-    if (gMeme.lines.length) {
-        gMeme.lines.forEach(line => {
-            renderLine(line)
-        });
-    }
-}
 
 function clearCanvas() {
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
 
 }
 
-
 function resizeCanvas() {
     var elContainer = document.querySelector('.canvas-container');
-    gCanvas.width = elContainer.offsetWidth
-    gCanvas.height = elContainer.offsetHeight
+    gElCanvas.width = elContainer.offsetWidth
+    gElCanvas.height = elContainer.offsetHeight
 }
 
 function onMove(number) {
@@ -215,32 +230,6 @@ function onImgInput(ev) {
     loadImageFromInput(ev, renderImg)
 }
 
-// function loadImageFromInput(ev, onImageReady) {
-//     // document.querySelector('.share-container').innerHTML = ''
-//     var reader = new FileReader()
-
-//     reader.onload = function(event) {
-//         // console.log('event:', event)
-//         var img = new Image()
-//         img.onload = function() {
-//             let currentId = makeId();
-//             gImgs.unshift({
-//                 id: currentId,
-//                 src: img.src,
-//                 keywords: ['my imgs'],
-
-//                 onAddLine()
-//             });
-//         }
-
-//     }
-//     reader.readAsDataURL(ev.target.files[0])
-//     renderLines()
-
-// }
-
-
-
 function renderImg(img) {
     gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
 }
@@ -265,4 +254,117 @@ function onSetLang(lang) {
     else document.body.classList.remove('rtl')
         // renderBooks();
     doTrans();
+}
+
+function onInputFilter(inputFilter) {
+    updateFilter(inputFilter)
+    renderImages()
+}
+
+// function onSetFilter(filterBy) {
+//     updateFilterBy(filterBy)
+//     renderImgs()
+// }
+
+
+
+// function filterImages(imgs, txt) {
+//     var imgsForDisplay = imgs.filter((img) => {
+//         return img.keywords.some((keyword) => {
+//             return keyword.toUpperCase().includes(txt.toUpperCase());
+//         });
+//     });
+
+//     return imgsForDisplay;
+// }
+
+
+function toggleMenu() {
+    document.querySelector('body').classList.toggle('open-menu');
+}
+
+
+
+// *******************MOVE LINE*******************
+
+function addMouseListeners() {
+    gCanvas.addEventListener('mousemove', onMove)
+    gCanvas.addEventListener('mousedown', onDown)
+    gCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+    gCanvas.addEventListener('touchmove', onMove)
+    gCanvas.addEventListener('touchstart', onDown)
+    gCanvas.addEventListener('touchend', onUp)
+}
+
+
+
+
+function onDown(ev) {
+    const pos = getEvPos(ev)
+    if (!islineClicked(pos)) return
+    setLineDrag(true)
+    gStartPos = pos
+    document.body.style.cursor = 'grabbing'
+
+}
+
+function onMove(ev) {
+    const line = getLine();
+    if (circle.isDrag) {
+        const pos = getEvPos(ev)
+            // console.log('gStartPos:', gStartPos)
+            // console.log('pos:', pos)
+        const dx = pos.x - gStartPos.x
+        const dy = pos.y - gStartPos.y
+        moveLine(dx, dy)
+        gStartPos = pos
+        renderCanvas()
+    }
+}
+
+
+function onUp() {
+    setLineDrag(false)
+    document.body.style.cursor = 'grab'
+}
+
+function getEvPos(ev) {
+    var pos = {
+        x: ev.offsetX,
+        y: ev.offsetY
+    }
+    if (gTouchEvs.includes(ev.type)) {
+        ev.preventDefault()
+        ev = ev.changedTouches[0]
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
+        }
+    }
+    return pos
+}
+
+function setLineDrag(isDrag) {
+    gCurrLine.isDrag = isDrag
+}
+
+
+function moveLine(dx, dy) {
+
+    // console.log('gCircle.pos.x:', gCircle.pos.x)
+    // console.log('gCircle.pos.y:', gCircle.pos.y)
+    // console.log('dy:', dy)
+    // console.log('dx:', dx)
+    gCurrLine.x += dx
+    gCurrLine.y += dy
+        // console.log('gCircle.pos.x:', gCircle.pos.x)
+        // console.log('gCircle.pos.y:', gCircle.pos.y)
+
+}
+
+function getLine() {
+    return gCurrLine
 }

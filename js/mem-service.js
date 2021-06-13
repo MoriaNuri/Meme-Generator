@@ -5,6 +5,9 @@ var gMeme
 var gElCanvas
 var gCurrLine
 
+// var gFilterBy
+var gInputFilter
+
 
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 var gImgs = [
@@ -36,7 +39,7 @@ var gStickers = [
 ];
 
 function getStickerUrl(id) {
-    return gStickers.find(sticker => sticker.id === id).url
+    return gStickers.find(sticker => sticker.id === id)
 }
 
 function getMmemStickerUrl(id) {
@@ -46,6 +49,9 @@ function getMmemStickerUrl(id) {
 function getImageUrl() {
     return gImgs.find(img => img.id === gMeme.selectedImgId).url
 }
+
+
+
 
 function resetMeme() {
     gMeme = {
@@ -68,6 +74,10 @@ function resetMeme() {
 }
 
 
+function setImage(imgId) {
+    gMeme.selectedImgId = imgId
+}
+
 function addLine() {
     gMeme.lines.push({
         txt: 'Enter your txt',
@@ -82,15 +92,15 @@ function addLine() {
     })
 }
 
-// function addSticker(id) {
-//     gMeme.sticker.push({
-//         id:
+function addsticker(id) {
+    gMeme.stickers.push({
+        id: gMeme.stickers.length,
+        url: getStickerUrl(id),
+        x: 100,
+        y: 200,
 
-
-
-
-//     })
-// }
+    })
+}
 
 function updateCurrLine() {
     gCurrLine = gMeme.lines[gMeme.selectedLineIdx]
@@ -101,9 +111,6 @@ function setPrevLineIdx() {
     gMeme.selectedLineIdx = (idx >= 0) ? idx : 0
 }
 
-function setImage(imgId) {
-    gMeme.selectedImgId = imgId
-}
 
 
 function setMemeLine(txt) {
@@ -197,4 +204,28 @@ function generateKeyWords() {
     }, {});
 
     return keysMap;
+}
+
+function selectLineToMove(ev) {
+    var lineIndex = gMeme.lines.findIndex(line => {
+        let txtWidth = gCtx.measureText(line.txt);
+        ev.offsetY > line.y - line.fontSize &&
+            ev.offsetY < line.y + line.fontSize &&
+            ev.offsetX > line.x
+    })
+    gIslineDragged = lineIndx
+}
+
+// function SetFilter(filterBy) {
+//     gFilterBy = filterby
+// }
+
+
+function updateFilter(inputFilter) {
+    gInputFilter = inputFilter
+}
+
+function getImgs() {
+    var regex = new RegExp(gInputFilter, 'i')
+    return gImgs.filter(img => regex.test(img.keywords[0]))
 }

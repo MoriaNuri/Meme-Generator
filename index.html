@@ -10,7 +10,7 @@
 </head>
 
 <body onload="init()">
-
+    <div class="menu-screen" onclick="toggleMenu()"></div>
     <header class="main-header flex space-between align-center">
         <h3 class="logo" data-trans="logo">Meme Generator</h3>
         <nav class="nav-ber">
@@ -18,28 +18,24 @@
                 <li data-trans="gallery" class="gallery active" onclick="  moveToGallery()">Gallery</li>
                 <li data-trans="about" class="about">About</li>
             </ul>
-            <select class="translet" onchange="onSetLang(this.value)">
-                <option value="en">English</option>
-                <option value="he">עברית</option>
-            </select>
         </nav>
+        <button class="btn-menu" onclick="toggleMenu()">☰</button>
     </header>
 
     <main class="main-content">
         <div class="header-gallery flex align-center space-between ">
-            <form class="box-search">
-                <input data-trans="Search" class="input-search" type="text" placeholder="Search">
+            <!-- <form class="box-search">
+                <input data-trans="Search" class="input-search" type="text" placeholder="Search" oninput="onInputFilter(this)">
                 <button class="btn-search" type="submit"><img src="img/search2.png"></button>
             </form>
-
-            <div class="category flex">
-                <p data-trans="pets">Pets</p>
-                <p data-trans="kids">kids</p>
-                <p data-trans="politic">politic</p>
-            </div>
-            <button class="more" data-trans="more">More</button>
-
-
+            <div class="right-header flex">
+                <div class="category flex">
+                    <p data-trans="pets">Pets</p>
+                    <p data-trans="kids">kids</p>
+                    <p data-trans="politic">politic</p>
+                </div>
+                <button class="more" data-trans="more">More</button>
+            </div> -->
         </div>
 
         <div class="images-container">
@@ -64,8 +60,8 @@
                         <button onclick="onDelete()" class="delete-btn "><img src="img/delete.png"> </button>
                     </div>
                     <div class="btns-style grid">
-                        <button onclick="onUpdateSize(2)"><img src="img/A+@1X.png"></button>
-                        <button onclick="onUpdateSize(-2)"><img src="img/A-@1X.png"></button>
+                        <button class="bigg-size" onclick="onUpdateSize(2)"><img src="img/A+@1X.png"></button>
+                        <button class="small-size" onclick="onUpdateSize(-2)"><img src="img/A-@1X.png"></button>
                         <button onclick="onAlign('right')"><img src="img/righttxt.png"></button>
                         <button onclick="onAlign('center')"><img src="img/txtcenter.png"></button>
                         <button onclick="onAlign('left')"><img src="img/lefttxt.png"></button>
@@ -81,12 +77,12 @@
                         <button class="btn-fill"> <input type="color" name="color" oninput="onSetFillColor(this.value)" value="#ffffff"></button>
                     </div>
 
-                    <div class="stickers space-between ">
+                    <!-- <div class="stickers space-between ">
                         <button class=left-btn onclick="onScrollStickersLeft()"><img src="img/left.png"></button>
                         <div class="s">
                         </div>
                         <button class=right-btn onclick="onScrollStickersRight()"><img src="img/right.png"></button>
-                    </div>
+                    </div> -->
 
                     <div class="bottom-controller flex">
                         <!-- <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)"> -->
@@ -108,6 +104,10 @@
     <footer>
         <small class="copyright"> &copy; Moria Nuri </small>
 
+        <select class="translet" onchange="onSetLang(this.value)">
+            <option value="en">English</option>
+            <option value="he">עברית</option>
+        </select>
     </footer>
 
     <script src="js/mem-service.js"></script>
